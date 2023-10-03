@@ -159,7 +159,7 @@ visitors %>%
 _What are the mean and median visitor numbers in 2022 across all attractions?_
 
 ```{r Q6}
-visitors %>% 
+visitors %>%
   summarise(
     mean_2022 = mean(n_2022),
     med_2022 = median(n_2022)
@@ -172,12 +172,11 @@ visitors %>%
 _Perform the same calculation for the 2021 admissions data._
 
 ```{r Ex_h}
-visitors %>% 
+visitors %>%
   summarise(
-    na.rm=TRUE,
-    mean_2021 = mean(n_2021),
-    med_2021 = median(n_2021)
-    )
+    mean_2021 = mean(n_2021, na.rm = TRUE),
+    med_2021 = median(n_2021, na.rm = TRUE)
+  )
 ```
 
 All values in the output are `NA`!
@@ -186,7 +185,7 @@ All values in the output are `NA`!
 
 _What does `NA` stand for and why are you getting this as your answer to the previous question._
 
-**Write your answer here**
+**Not available, this is becase there are NAs or non-numeric values in the n_2021 colum, so the median cannot be calculated.**
 
 
 
@@ -195,7 +194,11 @@ _What does `NA` stand for and why are you getting this as your answer to the pre
 
 _Look at the help pages for the `mean()` and `median()` commands to see what the input argument `na.rm` does. Edit your code from exercise h so that it computes the summary statistics where data is available._
 
-**Write your answer here**
+**visitors %>% 
+  summarise(
+    mean_2021 = mean(n_2021, na.rm = TRUE),
+    med_2021 = median(n_2021, na.rm = TRUE)
+  )**
 
 
 
@@ -217,7 +220,7 @@ visitors %>%
 
 _Observe in question 6 that the mean statistics across all settings are much larger than the corresponding median statistics. Discuss in your group what this suggests about the data._
 
-**Write your answer here**
+**There is a greater difference between visitor numbers for the larger settings and the median than the difference between smaller settings and the median.**
 
 
 
@@ -250,8 +253,8 @@ _How many tourist attractions are there in each of the 4 nations? From this, dis
 
 
 ```{r Ex_l}
-#________ %>%
-#  ______(_______)
+visitors_with_nations %>%
+count(nation)
 ```
 
 
@@ -264,7 +267,14 @@ _Within each of the 4 nations, what is the proportion of tourist attractions tha
 
 ```{r Ex_m}
 # Write your code here
-
+proportion_free <- visitors_with_nations %>%
+  filter(
+      admission == "Free",
+      nation == "Scotland",
+  )
+Scotland_free <- proportion_free %>% count(nation)
+mutate (Scotland_free)
+glimpse (proportion_free)
 
 ```
 
